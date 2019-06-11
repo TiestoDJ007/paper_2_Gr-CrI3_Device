@@ -26,9 +26,10 @@ if __name__ == "__main__":
     for i in range(len(atom_position)):
         plot_data_up.append([atom_position[i][1][0], dos_upper[i]])
     plot_data_up = np.array(plot_data_up)
-    data_up_sort = plot_data_up[np.argsort(plot_data_up[:, 0], kind='mergesort')].tolist()
+    data_up_sort = plot_data_up[np.argsort(plot_data_up[:, 0], kind='stable')].tolist()
     #排序数组并将第一列相同的数对应的数据进行加和，将第一个遇到的数变成num_start,向下对比此位，当数不同的时候记录其序号为num_end,
     #再将num_start和num_end设置为加和的头和尾，进行加和。
+    #必须先进行数据排序，用numpy.argsort()
     data_dos_up = []
     num_same = 0
     num_start = 0
@@ -57,10 +58,4 @@ if __name__ == "__main__":
             else:
                 data_dos_up.append([data_up_sort[i][0], data_up_sort[i][1]])
 
-    # plot_data_down = []
-    # for i in range(len(atom_position)):
-    #    plot_data_down.append([atom_position[i][1][0], dos_under[i]])
-
-    # data_plot = np.reshape(data_plot_up[:,2],(401,200))
-    # ax=sns.heatmap(data_plot)
-    # plt.show()
+    #data_plot = data_dos_up[np.argsort(data_dos_up[:, 0], kind='mergesort')].tolist()
